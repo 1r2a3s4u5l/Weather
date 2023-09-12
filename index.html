@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .main {
+        background-color: white;
+        width: max-content;
+        padding: 35px;
+        border-radius: 20%;
+      }
+      .search-bar {
+        height: 30px;
+        border-radius: 30%;
+      }
+      .btun {
+        height: 40px;
+        border-radius: 50%;
+      }
+      body {
+        background-image: url("https://www.nasa.gov/sites/default/files/thumbnails/image/smap-weather.jpg");
+        background-repeat: no-repeat;
+        background-size: 100%;
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-size: cover;
+        /* background-color: black; */
+      }
+    </style>
+  </head>
+  <body>
+    <div class="main">
+      <div class="search">
+        <input class="search-bar" type="text" placeholder="search" id="myInput"/>
+        <button class="btun" id="btn" style="width: 70px">Search</button>
+      </div>
+      <div class="weather">
+        <h2 class="city">Weather in Tashkent</h2>
+        <h1 class="temp">22.97°C</h1>
+        <div class="humidity">Humidity: 90%</div>
+        <div class="wind">Wind speed: 4.12 km/h</div>
+      </div>
+    </div>
+    <script>
+      const city = document.getElementById("myInput");
+      const buttonElement = document.getElementById("btn");
+
+      buttonElement.addEventListener("click", (event) => {
+        const inputValue = city.value;
+        const URL = `https://api.openweathermap.org/data/2.5/weather?q=${inputValue}&units=metric&appid=6b62c29e5d43857702530c9e7a3f4aa5`;
+        fetch(URL)
+          .then((response) => response.json())
+          .then((json) => {
+            document.body.childNodes[1].childNodes[3].childNodes[1].innerHTML="Weather in "+inputValue
+            document.body.childNodes[1].childNodes[3].childNodes[3].innerHTML=json.main.temp+"°C"
+            document.body.childNodes[1].childNodes[3].childNodes[5].innerHTML="Humidity:"+json.main.humidity+"%"
+            document.body.childNodes[1].childNodes[3].childNodes[7].innerHTML="Wind speed "+json.wind.speed+"km/h"
+          });
+      });
+    </script>
+  </body>
+</html>
